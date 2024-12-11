@@ -16,7 +16,7 @@ pipeline {
             steps {
                 echo 'pulling from github';
                 git branch : 'master',
-                url : 'https://github.com/Zoubeir20/EventsDEVOPS'
+                url : 'https://github.com/Zoubeir20/EventsDevops'
             }
         }
          stage('maven build ') {

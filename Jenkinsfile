@@ -21,26 +21,27 @@ pipeline {
                 url : 'https://github.com/Zoubeir20/EventsDevops'
             }
         }
+         stages {
+                stage('Verify Tooling') {
+                    steps {
+                        script {
+                            // Check Docker and Docker Compose versions
+                            sh 'docker info'
+                            sh 'docker version'
+                            sh 'docker-compose version'
+
+                            // Check the versions of curl and jq
+                            sh 'curl --version'
+                            sh 'jq --version'
+                        }
+                    }
+                }
          stage('maven build ') {
             steps {
                 echo 'maven build';
                 sh """mvn clean install """
             }
-             stages {
-                    stage('Verify Tooling') {
-                        steps {
-                            script {
-                                // Check Docker and Docker Compose versions
-                                sh 'docker info'
-                                sh 'docker version'
-                                sh 'docker-compose version'
 
-                                // Check the versions of curl and jq
-                                sh 'curl --version'
-                                sh 'jq --version'
-                            }
-                        }
-                    }
         }
           stage('testing with mockito') {
             steps {

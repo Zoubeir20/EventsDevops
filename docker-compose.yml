@@ -7,7 +7,7 @@ services:
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     volumes:
-      - db:/var/lib/mysql
+      - db:/var/lib/mysql  # Use the named volume 'db'
 
   events-backend:
     depends_on:
@@ -37,3 +37,6 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
+
+volumes:
+  db:  # Declare the named volume 'db'

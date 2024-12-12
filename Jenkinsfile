@@ -1,7 +1,7 @@
 pipeline {
     environment {
 
-        registry = "Zoubeir20/eventsdevops"
+        registry = "zoubeirezzine/eventsdevops"
 
         registryCredential = 'dockerhub_id'
 

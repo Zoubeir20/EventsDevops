@@ -1,7 +1,7 @@
 pipeline {
     environment {
 
-        registry = "Zoubeir20/EventsDevops"
+        registry = "Zoubeir20/eventsdevops"
 
         registryCredential = 'dockerhub_id'
 
@@ -42,7 +42,7 @@ pipeline {
        stage('nexus') {
            steps {
                echo 'Deploy to nexus';
-                sh 'mvn deploy -D skipTests'
+                sh 'mvn deploy -DskipTests'
 
            }
         }

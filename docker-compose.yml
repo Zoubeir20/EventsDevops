@@ -1,21 +1,24 @@
+version: "3.8"
 services:
+  # Database application service
   mysqldb:
     image: mysql:5.7
     restart: unless-stopped
     ports:
-      - "3307:3306"
+      - 3307:3306
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     volumes:
-      - db:/var/lib/mysql  # Use the named volume 'db'
+      - db:/var/lib/mysql
 
-  events-backend:
+  # Backend application service
+  event-backend:
     depends_on:
       - mysqldb
     build: ./
     restart: on-failure
     ports:
-      - "8087:8087"
+      - 8087:8087
     stdin_open: true
     tty: true
     environment:
@@ -31,12 +34,15 @@ services:
         "spring.jpa.hibernate.ddl-auto": "update"
       }'
 
+  # Frontend application service
+
+  # Prometheus service
   prometheus:
     image: prom/prometheus:latest
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
-      - "9090:9090"
+      - "9090:9090" # Prometheus UI accessible on localhost:9090
 
 volumes:
-  db:  # Declare the named volume 'db'
+  db:

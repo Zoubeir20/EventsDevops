@@ -32,12 +32,12 @@ pipeline {
 
         }
           }
-       /*  stage('Sonarqube') {
+        stage('Sonarqube') {
             steps {
                 echo 'sonar test';
               sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=223JMT0056t*'
             }
-      }*/
+      }
 
        stage('nexus') {
            steps {

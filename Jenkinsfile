@@ -86,12 +86,14 @@ pipeline {
         }
 
         }
-      stage('Install Docker Compose') {
+stage('Install Docker Compose') {
    steps {
-        sh 'sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
-     sh 'sudo chmod +x /usr/local/bin/docker-compose'
+        powershell '''
+        Invoke-WebRequest -Uri "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Windows-x86_64.exe" -OutFile "C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker-compose.exe"
+        '''
     }
 }
+
 
         stage('Building and deploying using docker-compose') {
             steps {

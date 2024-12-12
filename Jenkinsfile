@@ -92,10 +92,24 @@ pipeline {
     //    sh 'sudo chmod +x /usr/local/bin/docker-compose'
    // }
 //}
-
-        stage('Building and deploying using docker-compose') {
+ stage('Build and Deploy with Docker Compose') {
             steps {
-               sh 'docker-compose up -d'
+                script {
+                    // Pull images if necessary
+                    sh 'docker-compose pull'
+
+                    // Bring up the services using Docker Compose
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
+
+        stage('Health Check') {
+            steps {
+                script {
+                    // Check if containers are running
+                    sh 'docker ps'
+                }
             }
         }
 

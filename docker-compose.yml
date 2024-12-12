@@ -42,7 +42,7 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
-      - "9091:9090" # Prometheus UI accessible on localhost:9090
+      - "9090:9090" # Prometheus UI accessible on localhost:9090
 
 volumes:
   db:

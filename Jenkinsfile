@@ -33,21 +33,7 @@ pipeline {
                 sh "mvn test"
 
         }
-         stages {
-                stage('Verify Tooling') {
-                    steps {
-                        script {
-                            // Check Docker and Docker Compose versions
-                            sh 'docker info'
-                            sh 'docker version'
-                            sh 'docker-compose version'
 
-                            // Check the versions of curl and jq
-                            sh 'curl --version'
-                            sh 'jq --version'
-                        }
-                    }
-                }
           }
        /*  stage('Sonarqube') {
             steps {

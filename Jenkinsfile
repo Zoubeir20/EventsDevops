@@ -11,9 +11,7 @@ pipeline {
 
     agent any
 
-
     stages {
-
         stage('git') {
             steps {
                 echo 'pulling from github';
@@ -21,13 +19,11 @@ pipeline {
                 url : 'https://github.com/Zoubeir20/EventsDevops'
             }
         }
-
          stage('maven build ') {
             steps {
                 echo 'maven build';
                 sh """mvn clean install """
             }
-
         }
           stage('testing with mockito') {
             steps {
@@ -35,7 +31,6 @@ pipeline {
                 sh "mvn test"
 
         }
-
           }
        /*  stage('Sonarqube') {
             steps {
@@ -97,24 +92,10 @@ pipeline {
     //    sh 'sudo chmod +x /usr/local/bin/docker-compose'
    // }
 //}
- stage('Build and Deploy with Docker Compose') {
-            steps {
-                script {
-                    // Pull images if necessary
-                    sh 'docker-compose pull'
 
-                    // Bring up the services using Docker Compose
-                    sh 'docker-compose up -d'
-                }
-            }
-        }
-
-        stage('Health Check') {
+        stage('Building and deploying using docker-compose') {
             steps {
-                script {
-                    // Check if containers are running
-                    sh 'docker ps'
-                }
+               sh 'docker-compose up -d'
             }
         }
 
@@ -130,6 +111,5 @@ pipeline {
 
     }
 
-    }
 }
 

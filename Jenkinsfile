@@ -112,7 +112,6 @@ stage('Création du livrable') {
                 }
 stage('Vérification JAR') {
   steps {
-  ech "heeeeerrrrrrrrrr"
     sh 'file target/*.jar'
     sh 'ls -lh target/*.jar'
   }

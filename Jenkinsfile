@@ -25,6 +25,9 @@ pipeline {
                 sh """mvn clean install """
             }
         }
+
+
+
           stage('testing with mockito') {
             steps {
                 echo 'maven testing';
@@ -51,6 +54,7 @@ pipeline {
             steps {
 
                 script {
+
 
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
 
@@ -85,6 +89,51 @@ pipeline {
        //        sh 'docker-compose up -d'
        //     }
         //}
+
+stage('Création du livrable') {
+
+            steps {
+
+                echo "📦 Génération du livrable (JAR, WAR...)"
+
+                sh 'mvn package -DskipTests'
+
+            }
+
+        }
+        stage('Trouver le fichier JAR') {
+                    steps {
+                script {
+                    def jar = sh(script: "ls target/*.jar | grep -v original | head -n 1", returnStdout: true).trim()
+                    env.JAR_NAME = jar.replaceAll("target/", "")
+                    echo "🗂️ Fichier JAR détecté : ${env.JAR_NAME}"
+                         }
+                         }
+                }
+
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    def imageName = "event-backend"
+                    def jarFile = env.JAR_NAME ?: "app.jar"
+                    echo "📦 Construction de l'image Docker avec le JAR : ${jarFile}"
+                    sh "docker build --build-arg JAR_FILE=${jarFile} -t ${imageName}:latest ."
+                }
+            }
+        }
+
+        stage('Déploiement avec Docker Compose') {
+            when {
+                expression { fileExists('docker-compose.yml') }
+            }
+            steps {
+                echo "🚀 Déploiement avec docker-compose..."
+                sh 'docker compose stop event-backend'
+                sh 'docker compose up -d --build event-backend'
+                  sh 'sleep 40'
+            }
+        }
 
 
        stage('Grafana Prometheus') {

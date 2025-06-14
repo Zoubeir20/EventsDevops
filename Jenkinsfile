@@ -136,7 +136,7 @@ stage('Vérification JAR') {
             steps {
                 echo "🚀 Déploiement avec docker-compose..."
                 sh 'docker compose stop event-backend'
-                sh 'docker compose up -d --build --no-cache event-backend'
+                sh 'docker compose up -d --build event-backend'
                   sh 'sleep 40'
             }
         }
